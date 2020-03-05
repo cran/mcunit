@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+
+<title>Introduction to mcunit</title>
+
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+<link href="data:text/css;charset=utf-8,body%20%7B%0Abackground%2Dcolor%3A%20%23fff%3B%0Amargin%3A%201em%20auto%3B%0Amax%2Dwidth%3A%20700px%3B%0Aoverflow%3A%20visible%3B%0Apadding%2Dleft%3A%202em%3B%0Apadding%2Dright%3A%202em%3B%0Afont%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0Afont%2Dsize%3A%2014px%3B%0Aline%2Dheight%3A%201%2E35%3B%0A%7D%0A%23header%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0A%23TOC%20%7B%0Aclear%3A%20both%3B%0Amargin%3A%200%200%2010px%2010px%3B%0Apadding%3A%204px%3B%0Awidth%3A%20400px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Aborder%2Dradius%3A%205px%3B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Afont%2Dsize%3A%2013px%3B%0Aline%2Dheight%3A%201%2E3%3B%0A%7D%0A%23TOC%20%2Etoctitle%20%7B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dsize%3A%2015px%3B%0Amargin%2Dleft%3A%205px%3B%0A%7D%0A%23TOC%20ul%20%7B%0Apadding%2Dleft%3A%2040px%3B%0Amargin%2Dleft%3A%20%2D1%2E5em%3B%0Amargin%2Dtop%3A%205px%3B%0Amargin%2Dbottom%3A%205px%3B%0A%7D%0A%23TOC%20ul%20ul%20%7B%0Amargin%2Dleft%3A%20%2D2em%3B%0A%7D%0A%23TOC%20li%20%7B%0Aline%2Dheight%3A%2016px%3B%0A%7D%0Atable%20%7B%0Amargin%3A%201em%20auto%3B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dcolor%3A%20%23DDDDDD%3B%0Aborder%2Dstyle%3A%20outset%3B%0Aborder%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0Aborder%2Dwidth%3A%202px%3B%0Apadding%3A%205px%3B%0Aborder%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dstyle%3A%20inset%3B%0Aline%2Dheight%3A%2018px%3B%0Apadding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0Aborder%2Dleft%2Dstyle%3A%20none%3B%0Aborder%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Ap%20%7B%0Amargin%3A%200%2E5em%200%3B%0A%7D%0Ablockquote%20%7B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Apadding%3A%200%2E25em%200%2E75em%3B%0A%7D%0Ahr%20%7B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%3A%20none%3B%0Aborder%2Dtop%3A%201px%20solid%20%23777%3B%0Amargin%3A%2028px%200%3B%0A%7D%0Adl%20%7B%0Amargin%2Dleft%3A%200%3B%0A%7D%0Adl%20dd%20%7B%0Amargin%2Dbottom%3A%2013px%3B%0Amargin%2Dleft%3A%2013px%3B%0A%7D%0Adl%20dt%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aul%20%7B%0Amargin%2Dtop%3A%200%3B%0A%7D%0Aul%20li%20%7B%0Alist%2Dstyle%3A%20circle%20outside%3B%0A%7D%0Aul%20ul%20%7B%0Amargin%2Dbottom%3A%200%3B%0A%7D%0Apre%2C%20code%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0Aborder%2Dradius%3A%203px%3B%0Acolor%3A%20%23333%3B%0Awhite%2Dspace%3A%20pre%2Dwrap%3B%20%0A%7D%0Apre%20%7B%0Aborder%2Dradius%3A%203px%3B%0Amargin%3A%205px%200px%2010px%200px%3B%0Apadding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Acode%20%7B%0Afont%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0Afont%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0Apadding%3A%202px%200px%3B%0A%7D%0Adiv%2Efigure%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0Abackground%2Dcolor%3A%20%23FFFFFF%3B%0Apadding%3A%202px%3B%0Aborder%3A%201px%20solid%20%23DDDDDD%3B%0Aborder%2Dradius%3A%203px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Amargin%3A%200%205px%3B%0A%7D%0Ah1%20%7B%0Amargin%2Dtop%3A%200%3B%0Afont%2Dsize%3A%2035px%3B%0Aline%2Dheight%3A%2040px%3B%0A%7D%0Ah2%20%7B%0Aborder%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Apadding%2Dbottom%3A%202px%3B%0Afont%2Dsize%3A%20145%25%3B%0A%7D%0Ah3%20%7B%0Aborder%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Afont%2Dsize%3A%20120%25%3B%0A%7D%0Ah4%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0Amargin%2Dleft%3A%208px%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Ah5%2C%20h6%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23ccc%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Aa%20%7B%0Acolor%3A%20%230033dd%3B%0Atext%2Ddecoration%3A%20none%3B%0A%7D%0Aa%3Ahover%20%7B%0Acolor%3A%20%236666ff%3B%20%7D%0Aa%3Avisited%20%7B%0Acolor%3A%20%23800080%3B%20%7D%0Aa%3Avisited%3Ahover%20%7B%0Acolor%3A%20%23BB00BB%3B%20%7D%0Aa%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0Aa%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%20code%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%0A" rel="stylesheet" type="text/css" />
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Introduction to mcunit</h1>
+
+
+
+<p>Increasingly sophisticated MCMC and Monte Carlo algorithms raise the scope for errors, either in derivations of mathematical quantities needed for sampling, or implementation errors. Testing for such errors should be an <em>integral and routine</em> part of the workflow of any Bayesian analysis.</p>
+<p><strong>mcunit</strong> makes it easy to do this, by allowing for unit testing MCMC and other Monte Carlo implementations within the framework of the testthat package <span class="citation">(Wickham 2011)</span>. The methods correspond to those proposed in <span class="citation">Gandy and Scott (2020)</span>. They are based on statistical hypothesis testing, and are designed to achieve an arbitrarily low false rejection probability, so that the user can be confident that a correctly implemented algorithm will almost certainly not be rejected. By default, this false rejection rate is set to <span class="math inline">\(10^{-5}\)</span>.</p>
+<p>MCMC samplers can be testes using <code>expect_mcmc</code> or <code>expect_mcmc_reversible</code>. These functions use different statistical hypothesis tests described in Section 2.1 and 2.2 of <span class="citation">(Gandy and Scott 2020)</span> respectively. <code>expect_mcmc_reversible</code> requires that the sampler to be tested is (or at least, is expected to be) reversible.</p>
+<p>This vignette demonstrates how to use these tests, using the following simple example. Consider the model <span class="math display">\[y \sim \theta_1 + \theta_2 + \epsilon,\]</span> where <span class="math inline">\(\theta := (\theta_1,\theta_2)\)</span> is apriori independent, zero mean normal with standard deviation <span class="math inline">\(\sigma=10\)</span>. The white noise term <span class="math inline">\(\epsilon\)</span> is independent from <span class="math inline">\(\theta\)</span> and also zero mean normal but with variance <span class="math inline">\(\sigma_{\epsilon}^2\)</span> = 0.1. While inference is easy here, we consider drawing samples from the posterior <span class="math inline">\(\pi(\theta \mid y)\)</span> using a Gibbs sampler. The posterior conditional distributions for <span class="math inline">\(\theta_1\)</span> and <span class="math inline">\(\theta_2\)</span> are normal with expectations <span class="math display">\[\mathbb{E}(\theta_i | y, \theta_j) = \frac{\sigma^2}{\sigma^2_{\epsilon} + \sigma^2}(y - \theta_j),\]</span> and variances <span class="math display">\[\mathbb{V}(\theta_i | y, \theta_j) = \frac{1}{\frac{1}{\sigma^2_{\epsilon}} + \frac{1}{\sigma^2}}.\]</span></p>
+<div id="correct-sampler" class="section level2">
+<h2>Correct Sampler</h2>
+<p>Start with a correctly implemented random scan Gibbs sampler. First load the package and set the seed.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">require</span>(mcunit)</code></pre></div>
+<pre><code>## Loading required package: mcunit</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">10</span>)</code></pre></div>
+<p>The following function updates one element of <span class="math inline">\(\theta\)</span> given the other and given the observed data <span class="math inline">\(y\)</span>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gibbsUpdate &lt;-<span class="st"> </span><span class="cf">function</span>(y, theta_j) {
+  <span class="co"># Samples theta_i given y and theta_j</span>
+  mean &lt;-<span class="st"> </span><span class="dv">100</span> <span class="op">*</span><span class="st"> </span>(y <span class="op">-</span><span class="st"> </span>theta_j) <span class="op">/</span><span class="st"> </span>(<span class="dv">100</span> <span class="op">+</span><span class="st"> </span><span class="fl">0.1</span>)
+  var &lt;-<span class="st"> </span><span class="fl">1.</span> <span class="op">/</span><span class="st"> </span>(<span class="fl">1.</span> <span class="op">/</span><span class="st"> </span><span class="dv">100</span> <span class="op">+</span><span class="st"> </span><span class="fl">1.</span> <span class="op">/</span><span class="st"> </span><span class="fl">0.1</span>)
+  <span class="kw">rnorm</span>(<span class="dv">1</span>, <span class="dt">mean=</span>mean, <span class="dt">sd=</span><span class="kw">sqrt</span>(var))
+}</code></pre></div>
+<p>The argument <code>y</code> is the observed data, and <code>theta_j</code> is the component to condition on. From this, we define a correctly implemented random scan sampler.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">randomScan &lt;-<span class="st"> </span><span class="cf">function</span>(theta, y, thinning) {
+  <span class="co"># Random Scan Gibbs</span>
+  <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>thinning) {
+    <span class="co"># select index to update</span>
+    i &lt;-<span class="st"> </span><span class="kw">sample.int</span>(<span class="dv">2</span>,<span class="dv">1</span>)
+    theta[i] &lt;-<span class="st"> </span><span class="kw">gibbsUpdate</span>(y, theta[i <span class="op">%%</span><span class="st"> </span><span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="dv">1</span>])
+  }
+  theta
+}</code></pre></div>
+<p>This function takes the current state of the chain <code>theta</code>, the data <code>y</code> and a thinning parameter which determines the number of individual updates to make before returning the new state.</p>
+<p>Our task is to test the correctness of <code>randomScan</code>. We will do this using both <code>expect_mcmc</code> and <code>expect_mcmc_reversible</code>. This latter method can be used because the sampler should, if correct, be reversible.</p>
+<p>Both methods require a list <code>object</code> which describes the MCMC sampler to be tested. The list must contain the following elements:</p>
+<ul>
+<li><code>object$genprior</code>: A function with no arguments that generates a sample from the prior distribution. No default value.</li>
+<li><code>object$gendata</code>: A function that takes as input the parameter value (of the type generated by genprior) and returns the observed data as an arbitrary R object. No default value.</li>
+<li><code>object$stepMCMC</code>: A function that takes three arguments:</li>
+<li><code>theta</code>: the current position of the chain (of the same type as produced by the prior),</li>
+<li><code>dat</code>: the observed data (of the same type as produced by gendat)</li>
+<li><code>thinning</code>: the number of steps the chain should take. 1 corresponds to one step.</li>
+<li><code>object$test</code>: Function that takes either one or two arguments, and returns a vector with components which will be used for checking the MCMC sampler. The first argument is interpreted as a parameter value, and if a second argument exists, it is interpreted as a data value. An example is the identity function: <span class="math inline">\(f(\theta) = \theta\)</span>. Alternatively, if you have access to the model’s likelihood function, you could use <span class="math inline">\(p(y \mid \theta)\)</span>.</li>
+</ul>
+<p>Please see the documentation for <code>expect_mcmc</code> and <code>expect_mcmc_reversible</code> for further details on this.</p>
+<p>We begin constructing this list by defining the prior sampler and the data sampler.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">obj &lt;-<span class="st"> </span><span class="kw">list</span>()
+obj<span class="op">$</span>genprior &lt;-<span class="st"> </span><span class="cf">function</span>() <span class="kw">rnorm</span>(<span class="dt">n=</span><span class="dv">2</span>, <span class="dt">mean=</span><span class="dv">0</span>, <span class="dt">sd=</span><span class="dv">10</span>)
+obj<span class="op">$</span>gendata &lt;-<span class="st"> </span><span class="cf">function</span>(theta) <span class="kw">sum</span>(theta) <span class="op">+</span><span class="st"> </span><span class="kw">rnorm</span>(<span class="dt">n=</span><span class="dv">1</span>, <span class="dt">mean=</span><span class="dv">0</span>, <span class="dt">sd=</span><span class="kw">sqrt</span>(<span class="fl">0.1</span>))</code></pre></div>
+<p>As test functions, we use the components <span class="math inline">\(\theta_1\)</span>, <span class="math inline">\(theta_2\)</span>, the prior density <span class="math inline">\(\pi(\theta)\)</span> and likelihood function <span class="math inline">\(p(y \mid \theta)\)</span>. The density and likelihood appear to be a good default choice because they are one-dimensional regardless of the dimension of the parameter vector and data.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">priorDensity &lt;-<span class="st"> </span><span class="cf">function</span>(theta) <span class="kw">prod</span>(<span class="kw">dnorm</span>(theta, <span class="dt">mean=</span><span class="dv">0</span>, <span class="dt">sd=</span><span class="dv">10</span>))
+likelihood &lt;-<span class="st"> </span><span class="cf">function</span>(theta, y) <span class="kw">dnorm</span>(y, <span class="dt">mean=</span><span class="kw">sum</span>(theta), <span class="dt">sd=</span><span class="kw">sqrt</span>(<span class="fl">0.1</span>))
+testVec &lt;-<span class="st"> </span><span class="cf">function</span>(theta, y) <span class="kw">c</span>(theta[<span class="dv">1</span>], theta[<span class="dv">2</span>], <span class="kw">priorDensity</span>(theta), <span class="kw">likelihood</span>(theta, y)) 
+obj<span class="op">$</span>test &lt;-<span class="st"> </span>testVec</code></pre></div>
+<p>Finally, we are left to define a single MCMC step.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">obj<span class="op">$</span>stepMCMC &lt;-<span class="st"> </span><span class="cf">function</span>(theta, dat, thinning) <span class="kw">randomScan</span>(theta, dat, thinning)
+<span class="kw">print</span>(obj)</code></pre></div>
+<pre><code>## $genprior
+## function () 
+## rnorm(n = 2, mean = 0, sd = 10)
+## 
+## $gendata
+## function (theta) 
+## sum(theta) + rnorm(n = 1, mean = 0, sd = sqrt(0.1))
+## 
+## $test
+## function (theta, y) 
+## c(theta[1], theta[2], priorDensity(theta), likelihood(theta, 
+##     y))
+## 
+## $stepMCMC
+## function (theta, dat, thinning) 
+## randomScan(theta, dat, thinning)</code></pre>
+<p>First consider <code>expect_mcmc</code>. We use <span class="math inline">\(100\)</span> thinning steps between samples to give the test some power to detect errors.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">expect_mcmc</span>(obj, <span class="dt">thinning =</span> <span class="dv">100</span>)</code></pre></div>
+<p>No errors were detected, because there are none. Recall that the false rejection rate is set to <span class="math inline">\(10^{-5}\)</span> by default, and so repeated application of this test should very rarely flag <code>randomScan.</code></p>
+<p>This sampler is also reversible, and so we try <code>expect_mcmc_reversible</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">expect_mcmc_reversible</span>(obj, <span class="dt">thinning =</span> <span class="dv">10</span>, <span class="dt">nsteps =</span> <span class="dv">10</span>)</code></pre></div>
+<p>Again, no error is detected (as expected).</p>
+</div>
+<div id="a-correct-non-reversible-sampler" class="section level2">
+<h2>A Correct Non-Reversible Sampler</h2>
+<p>Consider systematic scan of the vector <span class="math inline">\(\theta\)</span> rather than random scan.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">systematicScan &lt;-<span class="st"> </span><span class="cf">function</span>(theta, y, thinning) {
+  <span class="co"># Systematic Scan Gibbs</span>
+  <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>thinning) {
+    theta[<span class="dv">1</span>] &lt;-<span class="st"> </span><span class="kw">gibbsUpdate</span>(y, theta[<span class="dv">2</span>])
+    theta[<span class="dv">2</span>] &lt;-<span class="st"> </span><span class="kw">gibbsUpdate</span>(y, theta[<span class="dv">1</span>])
+  }
+  theta
+}</code></pre></div>
+<p>This sampler is correct and <code>expect_mcmc</code> is unlikely to falsely detect errors.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">obj<span class="op">$</span>stepMCMC &lt;-<span class="st"> </span><span class="cf">function</span>(theta, dat, thinning) <span class="kw">systematicScan</span>(theta, dat, thinning)
+<span class="kw">expect_mcmc</span>(obj, <span class="dt">thinning =</span> <span class="dv">100</span>)</code></pre></div>
+<p>Good. What happens using <code>expect_mcmc_reversible</code> with thinning of <span class="math inline">\(1\)</span>?</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">expect_mcmc_reversible</span>(obj, <span class="dt">thinning =</span> <span class="dv">1</span>, <span class="dt">nsteps =</span> <span class="dv">10</span>)</code></pre></div>
+<pre><code>## Error: Test failed for components  with p-values=NULL in iteration 2</code></pre>
+<p>The test failed. This illustrates why <code>expect_mcmc_reversible</code> should not be used for a non-reversible sampler - we have no gaurantee over the false rejection rate. Even though this sampler is correctly implemented, we are erroneously detecting an error.</p>
+</div>
+<div id="an-incorrect-sampler" class="section level2">
+<h2>An Incorrect Sampler</h2>
+<p>Now we make a genuine mistake in the sampler, and investigate whether the methods detect it. We replace the variance terms <span class="math inline">\(\sigma^2\)</span> and <span class="math inline">\(\sigma^2_{\epsilon}\)</span> in <span class="math inline">\(\mathbb{V}(\theta_i | y, \theta_j)\)</span> with their corresponding standard deviations (i.e. <span class="math inline">\(\sigma\)</span> and <span class="math inline">\(\sigma_{\epsilon}\)</span>).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gibbsUpdate &lt;-<span class="st"> </span><span class="cf">function</span>(y, theta_j) {
+  <span class="co"># Samples theta_i given y and theta_j</span>
+  mean &lt;-<span class="st"> </span><span class="dv">100</span> <span class="op">*</span><span class="st"> </span>(y <span class="op">-</span><span class="st"> </span>theta_j) <span class="op">/</span><span class="st"> </span>(<span class="dv">100</span> <span class="op">+</span><span class="st"> </span><span class="fl">0.1</span>)
+  var &lt;-<span class="st"> </span><span class="fl">1.</span> <span class="op">/</span><span class="st"> </span>(<span class="fl">1.</span> <span class="op">/</span><span class="st"> </span><span class="dv">10</span> <span class="op">+</span><span class="st"> </span><span class="fl">1.</span> <span class="op">/</span><span class="st"> </span><span class="kw">sqrt</span>(<span class="fl">0.1</span>))
+  <span class="kw">rnorm</span>(<span class="dv">1</span>, <span class="dt">mean=</span>mean, <span class="dt">sd=</span><span class="kw">sqrt</span>(var))
+}</code></pre></div>
+<p>Also make sure to switch back to random scan…</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">obj<span class="op">$</span>stepMCMC &lt;-<span class="st"> </span><span class="cf">function</span>(theta, dat, thinning) <span class="kw">randomScan</span>(theta, dat, thinning)</code></pre></div>
+<p>Rerunning the tests…</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">expect_mcmc</span>(obj, <span class="dt">thinning =</span> <span class="dv">100</span>)</code></pre></div>
+<pre><code>## Error: Test failed for components  with p-values=NULL in iteration 1</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">expect_mcmc_reversible</span>(obj, <span class="dt">thinning =</span> <span class="dv">10</span>, <span class="dt">nsteps =</span> <span class="dv">10</span>)</code></pre></div>
+<pre><code>## Error: Test failed for components  with p-values=NULL in iteration 1</code></pre>
+<p>Great! Both tests detect a problem. Even better, you can be pretty much sure there is a problem because the chance of a false rejection is upper bounded by <span class="math inline">\(10^{-5}\)</span>!</p>
+</div>
+<div id="references" class="section level2 unnumbered">
+<h2>References</h2>
+<div id="refs" class="references">
+<div id="ref-gandy_scott_2019">
+<p>Gandy, A., and Scott, J. (2020), “Unit testing for MCMC and other Monte Carlo methods.”</p>
+</div>
+<div id="ref-wickham_2011">
+<p>Wickham, H. (2011), “Testthat: Get started with testing,” <em>The R Journal</em>, 3, 5–10.</p>
+</div>
+</div>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
