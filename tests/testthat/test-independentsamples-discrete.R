@@ -1,3 +1,5 @@
+set.seed(12345)
+
 test_that("Bernoullidistr",{
     object <- list(genprior=function() rbinom(1,size=2,prob=p),
                    gendata=function(theta) NULL,

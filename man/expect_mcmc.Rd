@@ -24,12 +24,12 @@ expect_mcmc(object, control = NULL, thinning = NULL, joint = FALSE)
 \itemize{
 \item n number of samples to be taken in the first step. Default: 1e3
 \item maxseqsteps: Number of sequential attempts to use. Default: 7.
-\item incn: Factor by which to multiply n from the second  sequential attempt onwards. Default: 4.
+\item incn: Factor by which to multiply n from the second  sequential attempt onward. Default: 4.
 \item level: bound on the type I error, ie the probability of wrongly rejecting a sampler with the correct distribution. Default: 1e-5.
 \item debug: If positive  then debug information will be printed via 'message()'. Default: 0.
 }}
 
-\item{thinning}{Amount of thinnig for the MCMC chain. 1 corresponds to no thinning. Default: automatically computed to ensure an autocorrelcation of at most 0.5 at lag 1.}
+\item{thinning}{Amount of thinning for the MCMC chain. 1 corresponds to no thinning. Default: automatically computed to ensure an autocorrelation of at most 0.5 at lag 1.}
 
 \item{joint}{If TRUE, then the MCMC uses systematic scan of both data and parameters, rather than just updating parameters with the sampler to be tested. Default: FALSE.}
 }

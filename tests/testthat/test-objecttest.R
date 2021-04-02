@@ -1,3 +1,4 @@
+set.seed(12345)
 
 test_that("Methods work when object$test has either one or two arguments", {
   object <- list(genprior=function() rnorm(1),

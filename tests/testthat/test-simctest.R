@@ -1,3 +1,5 @@
+set.seed(12345)
+
 test_that("0.95",{
    J <- matrix(nrow=2,c(0,0.945, 0.94,0.96, 0.955,1))
    colnames(J) <- c("low","ok","high")

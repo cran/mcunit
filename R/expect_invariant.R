@@ -80,7 +80,7 @@ update_object <- function(object){
 #'     - thinning: the number of steps the chain should take. 1 corresponds to one step. 
 #' * test: Function that takes either one or two arguments, and returns a vector with components which will be used for checking the MCMC sampler. The first argument is interpreted as a parameter value, and if a second argument exists, it is interpreted as a data value. An example is the identity function: function(x) x. Alternatively, if you have access to the model's likelihood function, you could use: function(x,y) likelihood(x,y).
 #' @inheritParams expect_mc_test
-#' @param thinning Amount of thinnig for the MCMC chain. 1 corresponds to no thinning. Default: automatically computed to ensure an autocorrelcation of at most 0.5 at lag 1.
+#' @param thinning Amount of thinning for the MCMC chain. 1 corresponds to no thinning. Default: automatically computed to ensure an autocorrelation of at most 0.5 at lag 1.
 #' @param  nsteps Number of steps of the chain to use. Default: 10.
 #' @param p The probability with which the MCMC updates the parameter as opposed to the data in a given step. If less than 1.0, then the MCMC is a random scan on both data and parameters. Default: 1.0.
 #' @param tolerance Absolute error where value of the samplers are treated as equal. Default: 1e-8.

@@ -10,7 +10,7 @@ vignette: >
 ---
 
 Using the methodology developed by @GandyHahnDing:pvaluebuckets, we
-can check if tests reject with the desired frequence (i.e. we can
+can check if tests reject with the desired frequency (i.e. we can
 check the level of the tests) and we can check if confidence intervals
 have the desired coverage probabilities.
 
@@ -29,15 +29,15 @@ The following does this.
 
 This example uses three buckets $[0,0.45]$, $[0.04,0.06]$,$[0.55,1]$. The method returns, with at least the probability `1-error`, a bucket that contains the correct rejection probability. 
 
-The code below implements a test that succeeeds if the bucket $[0.04,
+The code below implements a test that succeeds if the bucket $[0.04,
 0.06]$ is returned. In other words, if the true rejection probability
 is in $(0.045, 0.055)$, then the test is guaranteed to succeed (with
-proability of at least `1-error`). If it is in $[0.04,
+probability of at least `1-error`). If it is in $[0.04,
 0.045]\cup[0.55,0.06]$, the test may or may not succeed (as different
 buckets may be returned.  If it is in $[0,0.04)\cup(0.06,1]$ then it is
-guranteed to fail (with proability of at least `1-error`).
+guaranteed to fail (with probability of at least `1-error`).
 
-The following is afunction that simulates data and then returns the test decision.
+The following is a function that simulates data and then returns the test decision.
 ```{r}
 gen <- function(){
     x <- rnorm(10)
@@ -134,7 +134,7 @@ Running the test in this way does not lead to an error.
 expect_bernoulli(gen,J=J,ok="ok")
 ```
 
-Hoever, if one chooses different buckets, then, as expected, an error is reported. 
+However, if one chooses different buckets, then, as expected, an error is reported. 
 ```{r, error=TRUE, purl=FALSE}
 J <- matrix(nrow=2,c(0,0.895, 0.89,0.91, 0.905,1))
 colnames(J) <- c("low","ok","high")

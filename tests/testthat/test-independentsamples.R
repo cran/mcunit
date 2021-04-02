@@ -1,3 +1,5 @@
+set.seed(12345)
+
 test_that("Normaldistr",{
     object <- list(genprior=function() rnorm(1),
                    gendata=function(theta) NULL,

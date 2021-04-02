@@ -128,7 +128,7 @@ Good. What happens using `expect_mcmc_reversible` with thinning of $1$?
 ```{r, error=TRUE, purl=FALSE}
 expect_mcmc_reversible(obj, thinning = 1, nsteps = 10)
 ```
-The test failed. This illustrates why `expect_mcmc_reversible` should not be used for a non-reversible sampler - we have no gaurantee over the false rejection rate. Even though this sampler is correctly implemented, we are erroneously detecting an error.  
+The test failed. This illustrates why `expect_mcmc_reversible` should not be used for a non-reversible sampler - we have no guarantee over the false rejection rate. Even though this sampler is correctly implemented, we are erroneously detecting an error.  
 
 ## An Incorrect Sampler
 

@@ -14,7 +14,7 @@ expect_mc_test(object, control = NULL, npval = 1)
 \itemize{
 \item n number of samples to be taken in the first step. Default: 1e3
 \item maxseqsteps: Number of sequential attempts to use. Default: 7.
-\item incn: Factor by which to multiply n from the second  sequential attempt onwards. Default: 4.
+\item incn: Factor by which to multiply n from the second  sequential attempt onward. Default: 4.
 \item level: bound on the type I error, ie the probability of wrongly rejecting a sampler with the correct distribution. Default: 1e-5.
 \item debug: If positive  then debug information will be printed via 'message()'. Default: 0.
 }}

@@ -1,3 +1,5 @@
+set.seed(12345)
+
 test_that("correct arguments", {
   expect_error(expect_mcmc_reversible(5,3))
   expect_error(expect_mcmc(5,3))

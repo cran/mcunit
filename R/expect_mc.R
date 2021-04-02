@@ -32,7 +32,7 @@ expect_mc_iid_ks <- function(object, cdf, control=NULL) {
 #' discrete distributions taking finitely many values.
 #'
 #' @param object A function taking one argument - that generates n univariate iid samples.
-#' @param prob A vector of probabilities for finitely many consecutive integers from 0 onwards.
+#' @param prob A vector of probabilities for finitely many consecutive integers from 0 onward.
 #' @inheritParams expect_mc_test
 #' @examples
 #'    sampler <- function(n) rbinom(n,prob=0.6,size=5)
@@ -99,7 +99,7 @@ expect_mc_iid_mean <- function(object, mean, control=NULL) {
 #' @param control a list controlling the algorithm
 #' * n number of samples to be taken in the first step. Default: 1e3
 #' * maxseqsteps: Number of sequential attempts to use. Default: 7.
-#' * incn: Factor by which to multiply n from the second  sequential attempt onwards. Default: 4.
+#' * incn: Factor by which to multiply n from the second  sequential attempt onward. Default: 4.
 #' * level: bound on the type I error, ie the probability of wrongly rejecting a sampler with the correct distribution. Default: 1e-5.
 #' * debug: If positive  then debug information will be printed via 'message()'. Default: 0.
 #'@param npval number of p-values returned by the test. A Bonferroni correction is applied if >1. Default: 1.

@@ -1,3 +1,8 @@
+
+# mcunit 0.3.2
+
+* Setting seed in test files in order to avoid false fails
+
 # mcunit 0.3.1
 
 * added `expect_bernoulli()` and vignette to test e.g. levels of tests

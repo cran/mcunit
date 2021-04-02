@@ -1,5 +1,8 @@
+set.seed(12345)
+
 test_that("Normaldistr",{
 
+    print(runif(1))
     sampler <- function(n) rnorm(n)
     expect_mc_iid_ks(sampler, pnorm)
 
